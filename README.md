@@ -4,6 +4,11 @@ lightbox plugin for docsify
 
 ## Example implementation  
 
+| A  | B  | C |
+| - | - | - |
+| ![](./media/DALL·E%202024-05-18%2011.43.04%20-%20A%20cyberpunk%20city%20at%20night%20with%20neon%20lights,%20tall%20skyscrapers,%20and%20a%20bustling%20street%20filled%20with%20people%20in%20futuristic%20attire.%20The%20buildings%20are%20adorned.webp)  | ![](./media/DALL·E%202024-05-18%2011.43.21%20-%20A%20cyberpunk%20alleyway%20at%20night,%20illuminated%20by%20neon%20signs%20and%20holographic%20advertisements.%20The%20walls%20are%20covered%20with%20graffiti,%20and%20the%20ground%20is%20wet,%20r.webp)  | ![](./media/DALL·E%202024-05-18%2011.43.30%20-%20A%20cyberpunk%20market%20scene%20at%20night%20with%20stalls%20selling%20futuristic%20gadgets%20and%20neon%20signs%20everywhere.%20The%20market%20is%20crowded%20with%20people%20wearing%20cybernet.webp)|
+
+
 ### Images in a list
 
 * ![A vibrant futuristic cityscape at sunset.](./media/DALL·E%202024-05-18%2010.48.30%20-%20A%20vibrant,%20futuristic%20cityscape%20at%20sunset%20with%20neon%20lights,%20diverse%20architecture,%20and%20flying%20cars%20in%20the%20sky.%20The%20buildings%20have%20various%20shapes%20and%20si.webp)
@@ -49,3 +54,5 @@ lightbox plugin for docsify
 ![](./media/DALL·E%202024-05-27%2014.24.23%20-%20An%20ultra%20high-resolution%20macro%20illustration%20of%20the%20energy%20states%20of%20electrons%20in%20a%20uranium%20atom%20during%20fission,%20in%20a%209%2016%20ratio.%20The%20illustration%20is%20s.webp)
 
 ![](./media/DALL·E%202024-05-27%2014.24.35%20-%20An%20ultra%20high-resolution%20macro%20illustration%20of%20the%20energy%20states%20of%20electrons%20in%20a%20uranium%20atom%20during%20fission,%20in%20a%209%2016%20ratio.%20The%20illustration%20is%20s.webp)
+
+# [IDEA](./idea.md)

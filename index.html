@@ -18,7 +18,7 @@
           hook.doneEach(() => {
             import('./docsify-lightbox.js').then(module => {
               const images = document.querySelectorAll('img');
-              console.log('Images found:', images); // Debugging log
+            //   console.log('Images found:', images); // Debugging log
               const lightbox = new module.default();
               lightbox.initialize(images);
             }).catch(err => console.error('Failed to load Lightbox plugin', err));

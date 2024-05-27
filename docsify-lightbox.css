@@ -1,4 +1,12 @@
 /* docsify-lightbox.css */
+body.no-scroll {
+  overflow: hidden;
+}
+
+img {
+  cursor: pointer;
+}
+
 .lightbox {
   display: none;
   position: fixed;
