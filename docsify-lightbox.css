@@ -96,10 +96,30 @@ img {
   right: 20px;
   display: flex;
   align-items: center;
+  background-color: rgba(50, 50, 50, 0.8);
+  padding: 10px;
+  border-radius: 5px;
 }
 
-.controls label,
+.controls span,
 .controls input,
-.controls button {
+.controls button,
+.controls label {
   margin-left: 10px;
+  color: #d3d3d3;
+}
+
+.controls input {
+  width: 100px;
+}
+
+.controls button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.controls button:hover {
+  color: #bbb;
 }
