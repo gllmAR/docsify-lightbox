@@ -89,3 +89,17 @@ img {
 .nav .next:hover {
   color: #ccc;
 }
+
+.controls {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.controls label,
+.controls input,
+.controls button {
+  margin-left: 10px;
+}
