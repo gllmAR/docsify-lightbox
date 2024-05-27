@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no, viewport-fit=cover">
+    <title>Docsify lightbox plugin</title>
+    <link rel="stylesheet" href="docsify-lightbox.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify/themes/vue.min.css" />
+</head>
+<body>
+  <div id="app"></div>
+  <script>
+    window.$docsify = {
+      name: '',
+      repo: '',
+      plugins: [
+        function(hook, vm) {
+          hook.doneEach(() => {
+            import('./docsify-lightbox.js').then(module => {
+              const images = document.querySelectorAll('img');
+              console.log('Images found:', images); // Debugging log
+              const lightbox = new module.default();
+              lightbox.initialize(images);
+            }).catch(err => console.error('Failed to load Lightbox plugin', err));
+          });
+        }
+      ]
+    };
+  </script>
+  <script src="https://unpkg.com/docsify/lib/docsify.min.js"></script>
+</body>
+</html>
