@@ -143,11 +143,11 @@ class Lightbox {
   getSpeedEmoji(speed) {
     const absSpeed = Math.abs(speed);
     if (absSpeed > 24) {
-      return speed < 0 ? '⇇' : '⇉';
+      return speed < 0 ? '⬅️' : '➡️';
     } else if (absSpeed > 16) {
-      return speed < 0 ? '↤' : '↦';
+      return speed < 0 ? '⬅️' : '➡️';
     } else if (absSpeed > 8) {
-      return speed < 0 ? '⬱' : '⬰';
+      return speed < 0 ? '⬅️' : '➡️';
     } else {
       return speed < 0 ? '⬅️' : '➡️';
     }
