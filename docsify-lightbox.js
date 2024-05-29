@@ -1,5 +1,3 @@
-// docsify-lightbox.js
-
 class Lightbox {
   constructor() {
     this.lightbox = document.createElement('div');
@@ -58,6 +56,7 @@ class Lightbox {
     this.addScrollSupport();
     this.addTouchSupport();
     this.setupAutoHide();
+    this.addKeyboardSupport();
   }
 
   initialize(images) {
@@ -218,6 +217,29 @@ class Lightbox {
       clearTimeout(timeout);
       timeout = setTimeout(later, wait);
     };
+  }
+
+  addKeyboardSupport() {
+    document.addEventListener('keydown', (e) => {
+      if (this.lightbox.classList.contains('show')) {
+        switch (e.key) {
+          case 'ArrowRight':
+            this.showNext();
+            break;
+          case 'ArrowLeft':
+            this.showPrev();
+            break;
+          case ' ':
+            this.togglePlayback();
+            break;
+          case 'Escape':
+            this.closeLightbox();
+            break;
+          default:
+            break;
+        }
+      }
+    });
   }
 }
 

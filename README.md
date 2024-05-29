@@ -55,4 +55,8 @@ lightbox plugin for docsify
 
 ![](./media/DALL·E%202024-05-27%2014.24.35%20-%20An%20ultra%20high-resolution%20macro%20illustration%20of%20the%20energy%20states%20of%20electrons%20in%20a%20uranium%20atom%20during%20fission,%20in%20a%209%2016%20ratio.%20The%20illustration%20is%20s.webp)
 
-# [IDEA](./idea.md)
+#  IDEA
+* [IDEA](./idea.md)
+
+# test 
+* [test](./test.md)
