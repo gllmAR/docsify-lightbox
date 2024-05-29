@@ -75,7 +75,6 @@ class Lightbox {
     this.lightboxCaption.textContent = this.images[this.currentIndex].alt || '';
     this.lightbox.classList.add('show');
     document.body.classList.add('no-scroll');
-    this.resetHideTimeout();
   }
 
   closeLightbox() {
