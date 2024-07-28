@@ -1,4 +1,3 @@
-/* docsify-lightbox.css */
 body.no-scroll {
   overflow: hidden;
 }
@@ -31,6 +30,7 @@ img {
   max-height: 80%;
   object-fit: contain;
   margin-bottom: 10px;
+  transition: transform 0.3s ease, transform-origin 0.3s ease; /* Add transition for smooth zooming and origin change */
 }
 
 .lightbox .caption {
@@ -93,12 +93,14 @@ img {
 .controls {
   position: absolute;
   bottom: 20px;
-  right: 20px;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   align-items: center;
   background-color: rgba(50, 50, 50, 0.8);
   padding: 10px;
   border-radius: 5px;
+  flex-wrap: nowrap;
 }
 
 .controls span,
@@ -122,4 +124,31 @@ img {
 
 .controls button:hover {
   color: #bbb;
+}
+
+.overlay {
+  position: relative;
+}
+
+.overlay sup {
+  position: absolute;
+  top: -0.5em;
+  right: -0.5em;
+  font-size: 0.5em;
+  color: #d3d3d3;
+}
+
+.nested-controls {
+  display: none;
+  flex-direction: row;
+  background-color: rgba(50, 50, 50, 0.8);
+  padding: 5px;
+  border-radius: 5px;
+  margin-top: 10px;
+  position: absolute;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  justify-content: center;
 }
