@@ -16,6 +16,7 @@ class Lightbox {
     this.hideTimeout = null;
     this.isZooming = false;
     this.nestedControlsVisible = false;
+    this.controlsVisible = false; // Track the visibility of controls
   }
 
   initLightbox() {
@@ -32,11 +33,14 @@ class Lightbox {
         <div class="prev" id="prev">&#10094;</div>
         <div class="next" id="next">&#10095;</div>
       </div>
-      <div class="controls">
-        <button id="toggle-playback"><span class="overlay">▶️</span></button>
-        <button id="reset-zoom"><span class="overlay">🔍<sup>0</sup></span></button>
-        <button id="show-slideshow-controls"><span class="overlay">⏯️</span></button>
-        <button id="download-image"><span class="overlay">📥</span></button>
+      <div class="controls-container">
+        <div class="controls">
+          <button id="toggle-playback"><span class="overlay">▶️</span></button>
+          <button id="reset-zoom"><span class="overlay">🔍<sup>0</sup></span></button>
+          <button id="show-slideshow-controls"><span class="overlay">⏯️</span></button>
+          <button id="download-image"><span class="overlay">📥</span></button>
+        </div>
+        <button class="menu-button" id="menu-button">☰</button>
       </div>
       <div class="nested-controls" id="nested-controls">
         <button id="play-nested"><span class="overlay">▶️</span></button>
@@ -69,6 +73,7 @@ class Lightbox {
     this.nestedControls = this.lightbox.querySelector('#nested-controls');
     this.nav = this.lightbox.querySelector('.nav');
     this.controls = this.lightbox.querySelector('.controls');
+    this.menuButton = this.lightbox.querySelector('#menu-button');
   }
 
   setupEventListeners() {
@@ -82,6 +87,7 @@ class Lightbox {
     this.resetNestedBtn.addEventListener('click', this.resetSpeed);
     this.resetZoomBtn.addEventListener('click', this.resetZoom);
     this.downloadImageBtn.addEventListener('click', this.downloadImage);
+    this.menuButton.addEventListener('click', this.toggleControlsVisibility);
 
     this.lightbox.addEventListener('click', (e) => {
       if (e.target === this.lightbox || e.target === this.closeBtn) {
@@ -90,10 +96,8 @@ class Lightbox {
     });
 
     this.addScrollSupport();
-    this.addTouchSupport();
     this.setupAutoHide();
     this.addKeyboardSupport();
-    this.addPinchZoomSupport();
   }
 
   initialize(images) {
@@ -109,7 +113,9 @@ class Lightbox {
   showLightbox = (index) => {
     this.currentIndex = index;
     this.lightboxImg.src = this.images[this.currentIndex].dataset.fullResolutionUrl || this.images[this.currentIndex].src;
-    this.lightboxCaption.textContent = this.images[this.currentIndex].alt || '';
+    const captionText = this.images[this.currentIndex].alt || '';
+    this.lightboxCaption.textContent = captionText;
+    this.lightboxCaption.style.display = captionText ? 'block' : 'none'; // Hide caption if no text
     this.lightbox.classList.add('show');
     document.body.classList.add('no-scroll');
   };
@@ -206,46 +212,6 @@ class Lightbox {
     document.body.removeChild(link);
   };
 
-  addTouchSupport() {
-    let startX = 0, startY = 0, startZoomFactor = 1, initialPinchDistance = 0;
-
-    this.lightbox.addEventListener('touchstart', (e) => {
-      if (e.touches.length === 1) {
-        startX = e.touches[0].clientX;
-        startY = e.touches[0].clientY;
-      } else if (e.touches.length === 2) {
-        startZoomFactor = this.zoomFactor;
-        initialPinchDistance = this.getDistance(e.touches[0], e.touches[1]);
-        e.preventDefault();
-      }
-    });
-
-    this.lightbox.addEventListener('touchmove', (e) => {
-      if (e.touches.length === 1) {
-        const deltaX = e.touches[0].clientX - startX;
-        const deltaY = e.touches[0].clientY - startY;
-        if (Math.abs(deltaX) > Math.abs(deltaY)) {
-          deltaX > 50 ? this.showNext() : this.showPrev();
-          startX = e.touches[0].clientX;
-        } else {
-          e.preventDefault();
-          this.updateZoomFactor(deltaY > 0 ? -0.1 : 0.1, e);
-          startY = e.touches[0].clientY;
-        }
-      } else if (e.touches.length === 2) {
-        e.preventDefault();
-        const distance = this.getDistance(e.touches[0], e.touches[1]);
-        const scale = distance / initialPinchDistance;
-        this.zoomFactor = Math.max(this.minZoomFactor, startZoomFactor * scale);
-        this.updateZoom();
-      }
-    });
-
-    this.lightbox.addEventListener('touchend', (e) => {
-      if (e.touches.length < 2) initialPinchDistance = 0;
-    });
-  }
-
   addScrollSupport() {
     this.lightbox.addEventListener('wheel', (e) => {
       e.preventDefault();
@@ -257,6 +223,15 @@ class Lightbox {
   toggleNestedControls = () => {
     this.nestedControls.style.display = this.nestedControls.style.display === 'none' ? 'flex' : 'none';
     this.nestedControlsVisible = !this.nestedControlsVisible;
+  };
+
+  toggleControlsVisibility = () => {
+    this.controlsVisible = !this.controlsVisible;
+    this.controls.style.display = this.controlsVisible ? 'flex' : 'none';
+    if (!this.controlsVisible) {
+      this.nestedControls.style.display = 'none';
+      this.nestedControlsVisible = false;
+    }
   };
 
   setupAutoHide() {
@@ -273,16 +248,19 @@ class Lightbox {
   };
 
   showControls = () => {
-    this.controls.style.display = 'flex';
-    if (this.nestedControlsVisible) this.nestedControls.style.display = 'flex';
+    if (this.controlsVisible) {
+      this.controls.style.display = 'flex';
+    }
     this.nav.style.display = 'flex';
     this.closeBtn.style.display = 'block';
   };
 
   hideControls = () => {
-    this.controls.style.display = 'none';
-    this.nestedControls.style.display = 'none';
-    this.nestedControlsVisible = false;
+    if (!this.controlsVisible) {
+      this.controls.style.display = 'none';
+      this.nestedControls.style.display = 'none';
+      this.nestedControlsVisible = false;
+    }
     this.nav.style.display = 'none';
     this.closeBtn.style.display = 'none';
   };
@@ -306,29 +284,6 @@ class Lightbox {
         }
       }
     });
-  }
-
-  addPinchZoomSupport() {
-    let initialDistance = null, startZoomFactor = 1;
-
-    this.lightbox.addEventListener('touchmove', (e) => {
-      if (e.touches.length === 2) {
-        e.preventDefault();
-        const distance = this.getDistance(e.touches[0], e.touches[1]);
-        initialDistance = initialDistance === null ? distance : initialDistance;
-        const scale = distance / initialDistance;
-        this.zoomFactor = Math.max(this.minZoomFactor, startZoomFactor * scale);
-        this.updateZoom();
-      }
-    });
-
-    this.lightbox.addEventListener('touchend', (e) => {
-      if (e.touches.length < 2) initialDistance = null;
-    });
-  }
-
-  getDistance(touch1, touch2) {
-    return Math.hypot(touch2.clientX - touch1.clientX, touch2.clientY - touch1.clientY);
   }
 }
 
