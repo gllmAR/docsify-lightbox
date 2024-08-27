@@ -100,7 +100,20 @@ class Lightbox {
     this.addKeyboardSupport();
   }
 
+   clearImages() {
+    this.images = [];
+    const lightboxImage = document.querySelector('#lightbox-img');
+    if (lightboxImage) {
+      lightboxImage.src = '';
+    }
+    const lightboxCaption = document.querySelector('#lightbox-caption');
+    if (lightboxCaption) {
+      lightboxCaption.textContent = '';
+    }
+  }
+
   initialize(images) {
+    this.clearImages();  // Clear any previous images
     this.images = images;
     this.images.forEach((img, index) => {
       img.addEventListener('click', (e) => {
@@ -312,5 +325,13 @@ export function initializeLightbox() {
   const lightbox = new Lightbox();
   lightbox.initialize(images);
 }
+
+// Use the Docsify `doneEach` hook to reinitialize the lightbox on each page load
+window.$docsify = window.$docsify || {};
+window.$docsify.plugins = (window.$docsify.plugins || []).concat((hook) => {
+  hook.doneEach(() => {
+    initializeLightbox();
+  });
+});
 
 export default Lightbox;
