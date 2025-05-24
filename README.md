@@ -58,6 +58,8 @@ lightbox plugin for docsify
 
 # Thumbnail
 
+Should not launch lightbox
+
 ```markdown
 [![Thumbnail](thumbnail-url)](full-resolution-url)
 ```

@@ -114,12 +114,20 @@ class Lightbox {
 
   initialize(images) {
     this.clearImages();  // Clear any previous images
-    this.images = images;
-    this.images.forEach((img, index) => {
-      img.addEventListener('click', (e) => {
-        e.preventDefault(); // Prevent default link behavior
-        this.showLightbox(index);
-      });
+    this.images = [];
+    
+    // Filter out thumbnail images (images inside anchor tags)
+    Array.from(images).forEach((img) => {
+      // Check if the image is inside an anchor tag (thumbnail)
+      const isInThumbnailLink = img.parentNode.tagName === 'A';
+      
+      if (!isInThumbnailLink) {
+        this.images.push(img);
+        img.addEventListener('click', (e) => {
+          e.preventDefault(); // Prevent default link behavior
+          this.showLightbox(this.images.indexOf(img));
+        });
+      }
     });
   }
 
